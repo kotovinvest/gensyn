@@ -209,8 +209,8 @@ class GensynDataCollector:
                     'id': node_id,
                     'name': 'UNKNOWN',
                     'address': eoa_addresses.get(node_id),
-                    'reward': 0,
-                    'score': 0,
+                    'reward': 0,  # Wins
+                    'score': 0,   # Rewards
                     'online': False,
                     'last_tx_minutes_ago': None,
                     'timestamp': datetime.now().isoformat()
@@ -224,12 +224,13 @@ class GensynDataCollector:
             if eoa_address:
                 last_tx_minutes = self.get_last_internal_tx_time(eoa_address)
             
+            # ИСПРАВЛЕНО: правильная привязка значений
             result = {
                 'id': node_id,
                 'name': peer_info.get('peerName', 'Unknown'),
                 'address': eoa_address,
-                'reward': peer_info.get('reward', 0),
-                'score': peer_info.get('score', 0),
+                'reward': peer_info.get('score', 0),      # score из API = Wins
+                'score': peer_info.get('reward', 0),     # reward из API = Rewards
                 'online': peer_info.get('online', False),
                 'last_tx_minutes_ago': last_tx_minutes,
                 'timestamp': datetime.now().isoformat()
